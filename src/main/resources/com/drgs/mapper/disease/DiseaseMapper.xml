@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.drgs.disease.mapper.DiseaseMapper">
+
+    <select id="countDiseaseById" parameterType="String" resultType="int">
+        select count(0) from medical_record where MEDICAL_RECORD = #{medicalRecord,jdbcType=VARCHAR}
+    </select>
+
+    <select id="countMDCById" parameterType="com.drgs.vo.MDCVo" resultType="int">
+        select count(0) from mdc_info where MDC = #{MDC} and ADRG = #{ADRG} and MAIN_DIAGNOSIS_ID = #{MainDiagnosisId}
+    </select>
+
+    <insert id="insertDiseaseData" parameterType="com.drgs.vo.DiseaseVo">
+            insert into medical_record
+            (PATIENT_NAME,MEDICAL_RECORD,SEX,HOSPITALIZED_NUM,AGE,PROVINCE,
+            CITY,COUNTY,ADMISSION_WAY,
+            ADMISSION_TIME,ADMISSION_DEPARTMENT_ID,ADMISSION_DEPARTMENT_NAME,
+            LEAVE_WAY,LEAVE_TIME,LEAVE_DEPARTMENT_ID,
+            LEAVE_DEPARTMENT_NAME,MAIN_DIAGNOSIS_ID,MAIN_DIAGNOSIS_NAME,
+            OTHER_DIAGNOSIS,SURGERY,HOSPITALIZED_DAYS,
+            HOSPITALIZED_COST,MEDICAL_PAYMENT,OVERALL_AMOUNT,
+            NEWBORN_BIRTH_DAYS,NEWBORN_ADMISSION_WEIGHT,VENTILATOR_USE_TIME,
+            DIRECTOR_ID,DIRETOR_NAME,CHIEF_PHYSICIAN_ID,
+            CHIEF_PHYSICIAN_NANE,ATTENDING_PHYSICIAN_ID,ATTENDING_PHYSICIAN_NAME,
+            RESIDENT_ID,RESIDENT_NAME,GENERAL_MEDICAL_SERVICES_FEE,
+            GENERAL_TREATMENT_OPERATION_FEE,NURSING_FEE,OTHER_FEE,
+            PATHOLOGY_DIAGNOSIS_FEE,LABORATORY_DIAGNOSTIC_FEE,IMAGING_DIAGNOSIS_FEE,
+            CLINICAL_DIAGNOSIS_PROJECT_FEE,NON_SURGICAL_TREATMENT_ITEM_FEE,CLINICAL_PHYSIOTHERAPY_FEE,
+            COST_OF_SURGERY,ANESTHESIA_FEE,SURGICAL_FEE,
+            REHABILITATION_FEE,TCM_TREATMENT_FEE,WESTERN_MEDICINE_FEE,
+            ANTIBACTERIAL_FEE,CHINESE_PATENT_MEDICINE_FEE,CHINESE_HERBAL_MEDICINE_FEE,
+            BLOOD_FEE,ALBUMIN_PRODUCTS_FEE,GLOBULIN_PRODUCTS_FEE,
+            COAGULATION_FACTOR_PRODUCTS_FEE,CYTOKINE_PRODUCT_FEE,EFDMMF_INSPECTION,
+            EFDMMF_TREATMENT,EFDMMF_SURGERY,OTHER_COST)
+            values (#{patientName}, #{medicalRecord}, #{sex},
+            #{hospitalizedNum}, #{age}, #{province},
+            #{city},#{county},#{admissionWay},
+            #{admissionTime},#{admissionDepartmentId},#{admissionDepartmentName},
+            #{leaveWay},#{leaveTime},#{leaveDepartmentId},
+            #{leaveDepartmentName},#{mainDiagnosisId},#{mainDiagnosisName},
+            #{otherDiagnosis},#{surgery},#{hospitalizedDays},
+            #{hospitalizedCost},#{medicalPayment},#{overallAmount},
+            #{newbornBirthDay},#{newbornAdmissionWeight},#{ventilatorUseTime},
+            #{directorId},#{directorName},#{chiefPhysicianId},
+            #{chiefPhysicianName},#{attendingPhysicianId},#{attendingPhysicianName},
+            #{residentId},#{residentName},#{generalMedicalServicesFee},
+            #{generalTreatmentOperationFee},#{nursingFee},#{otherFee},
+            #{pathologyDiagnosisFee},#{laboratoryDiagnosticFee},#{imagingDiagnosisFee},
+            #{clinicalDiagnosisFee},#{nonSurgicalTreatmentItemFee},#{clinicalPhysiotherapyFee},
+            #{costOfSurgery},#{anesthesiaFee},#{surgicalFee},
+            #{rehabilitationFee},#{TcmTreatmentFee},#{westernMedicineFee},
+            #{antibacterialFee},#{chinesePatentMedicineFee},#{chineseHerbalMedicineFee},
+            #{bloodFee},#{albuminProductsFee},#{globulinProductsFee},
+            #{coagulationFactorProductsFee},#{cytokineProductsFee},#{EFDMMFInspection},
+            #{EFDMMFTreatment},#{EFDMMFSurgery},#{otherCost})
+    </insert>
+
+    <insert id="insertMDCData" parameterType="com.drgs.vo.MDCVo">
+        insert into mdc_info (MDC,MDC_NAME,ADRG,
+        ADRG_NAME,MAIN_DIAGNOSIS_ID,MAIN_DIAGNOSIS_NAME)
+        values (#{MDC}, #{MDCName}, #{ADRG},
+        #{ADRGName}, #{MainDiagnosisId}, #{MainDiagnosisName})
+    </insert>
+
+    <select id="getDiseaseList" parameterType="java.util.Map" resultType="com.drgs.vo.DiseaseVo">
+        select
+        PATIENT_NAME as patientName, MEDICAL_RECORD as medicalRecord,SEX as sex,
+        HOSPITALIZED_NUM as hospitalizedNum,AGE as age,PROVINCE as province,
+        CITY as city,COUNTY as county,ADMISSION_WAY as admissionWay,
+        ADMISSION_TIME as admissionTime,ADMISSION_DEPARTMENT_ID as admissionDepartmentId,ADMISSION_DEPARTMENT_NAME as admissionDepartmentName,
+        LEAVE_WAY as leaveWay,LEAVE_TIME as leaveTime,LEAVE_DEPARTMENT_ID as leaveDepartmentId,
+        LEAVE_DEPARTMENT_NAME as leaveDepartmentName,MAIN_DIAGNOSIS_ID as mainDiagnosisId,MAIN_DIAGNOSIS_NAME as mainDiagnosisName,
+        OTHER_DIAGNOSIS as otherDiagnosis,SURGERY as surgery,HOSPITALIZED_DAYS as hospitalizedDays,
+        HOSPITALIZED_COST as hospitalizedCost,MEDICAL_PAYMENT as medicalPayment,OVERALL_AMOUNT as overallAmount,
+        NEWBORN_BIRTH_DAYS as newbornBirthDay,NEWBORN_ADMISSION_WEIGHT as newbornAdmissionWeight,VENTILATOR_USE_TIME as ventilatorUseTime,
+        DIRECTOR_ID as directorId,DIRETOR_NAME as directorName,CHIEF_PHYSICIAN_ID as chiefPhysicianId,
+        CHIEF_PHYSICIAN_NANE as chiefPhysicianName,ATTENDING_PHYSICIAN_ID as attendingPhysicianId,ATTENDING_PHYSICIAN_NAME as attendingPhysicianName,
+        RESIDENT_ID as residentId,RESIDENT_NAME as residentName,GENERAL_MEDICAL_SERVICES_FEE as generalMedicalServicesFee,
+        GENERAL_TREATMENT_OPERATION_FEE as generalTreatmentOperationFee,NURSING_FEE as nursingFee,OTHER_FEE as otherFee,
+        PATHOLOGY_DIAGNOSIS_FEE as pathologyDiagnosisFee,LABORATORY_DIAGNOSTIC_FEE as laboratoryDiagnosticFee,IMAGING_DIAGNOSIS_FEE as imagingDiagnosisFee,
+        CLINICAL_DIAGNOSIS_PROJECT_FEE as clinicalDiagnosisFee,NON_SURGICAL_TREATMENT_ITEM_FEE as nonSurgicalTreatmentItemFee,CLINICAL_PHYSIOTHERAPY_FEE as clinicalPhysiotherapyFee,
+        COST_OF_SURGERY as costOfSurgery,ANESTHESIA_FEE as anesthesiaFee,SURGICAL_FEE as surgicalFee,
+        REHABILITATION_FEE as rehabilitationFee,TCM_TREATMENT_FEE as TcmTreatmentFee,WESTERN_MEDICINE_FEE as westernMedicineFee,
+        ANTIBACTERIAL_FEE as antibacterialFee,CHINESE_PATENT_MEDICINE_FEE as chinesePatentMedicineFee,CHINESE_HERBAL_MEDICINE_FEE as chineseHerbalMedicineFee,
+        BLOOD_FEE as bloodFee,ALBUMIN_PRODUCTS_FEE as albuminProductsFee,GLOBULIN_PRODUCTS_FEE as globulinProductsFee,
+        COAGULATION_FACTOR_PRODUCTS_FEE as coagulationFactorProductsFee,CYTOKINE_PRODUCT_FEE as cytokineProductsFee,EFDMMF_INSPECTION as EFDMMFInspection,
+        EFDMMF_TREATMENT as EFDMMFTreatment,EFDMMF_SURGERY as EFDMMFSurgery,OTHER_COST as otherCost
+        from medical_record
+        <if test="medicalRecord != null and medicalRecord != ''">
+            where MEDICAL_RECORD = #{medicalRecord}
+        </if>
+    </select>
+
+    <select id="getDiseaseInfoByRecord" resultType="com.drgs.vo.DiseaseVo" parameterType="java.util.Map">
+        select
+        PATIENT_NAME as patientName, MEDICAL_RECORD as medicalRecord,SEX as sex,
+        HOSPITALIZED_NUM as hospitalizedNum,AGE as age,PROVINCE as province,
+        CITY as city,COUNTY as county,ADMISSION_WAY as admissionWay,
+        ADMISSION_TIME as admissionTime,ADMISSION_DEPARTMENT_ID as admissionDepartmentId,ADMISSION_DEPARTMENT_NAME as admissionDepartmentName,
+        LEAVE_WAY as leaveWay,LEAVE_TIME as leaveTime,LEAVE_DEPARTMENT_ID as leaveDepartmentId,
+        LEAVE_DEPARTMENT_NAME as leaveDepartmentName,MAIN_DIAGNOSIS_ID as mainDiagnosisId,MAIN_DIAGNOSIS_NAME as mainDiagnosisName,
+        OTHER_DIAGNOSIS as otherDiagnosis,SURGERY as surgery,HOSPITALIZED_DAYS as hospitalizedDays,
+        HOSPITALIZED_COST as hospitalizedCost,MEDICAL_PAYMENT as medicalPayment,OVERALL_AMOUNT as overallAmount,
+        NEWBORN_BIRTH_DAYS as newbornBirthDay,NEWBORN_ADMISSION_WEIGHT as newbornAdmissionWeight,VENTILATOR_USE_TIME as ventilatorUseTime,
+        DIRECTOR_ID as directorId,DIRETOR_NAME as directorName,CHIEF_PHYSICIAN_ID as chiefPhysicianId,
+        CHIEF_PHYSICIAN_NANE as chiefPhysicianName,ATTENDING_PHYSICIAN_ID as attendingPhysicianId,ATTENDING_PHYSICIAN_NAME as attendingPhysicianName,
+        RESIDENT_ID as residentId,RESIDENT_NAME as residentName,GENERAL_MEDICAL_SERVICES_FEE as generalMedicalServicesFee,
+        GENERAL_TREATMENT_OPERATION_FEE as generalTreatmentOperationFee,NURSING_FEE as nursingFee,OTHER_FEE as otherFee,
+        PATHOLOGY_DIAGNOSIS_FEE as pathologyDiagnosisFee,LABORATORY_DIAGNOSTIC_FEE as laboratoryDiagnosticFee,IMAGING_DIAGNOSIS_FEE as imagingDiagnosisFee,
+        CLINICAL_DIAGNOSIS_PROJECT_FEE as clinicalDiagnosisFee,NON_SURGICAL_TREATMENT_ITEM_FEE as nonSurgicalTreatmentItemFee,CLINICAL_PHYSIOTHERAPY_FEE as clinicalPhysiotherapyFee,
+        COST_OF_SURGERY as costOfSurgery,ANESTHESIA_FEE as anesthesiaFee,SURGICAL_FEE as surgicalFee,
+        REHABILITATION_FEE as rehabilitationFee,TCM_TREATMENT_FEE as TcmTreatmentFee,WESTERN_MEDICINE_FEE as westernMedicineFee,
+        ANTIBACTERIAL_FEE as antibacterialFee,CHINESE_PATENT_MEDICINE_FEE as chinesePatentMedicineFee,CHINESE_HERBAL_MEDICINE_FEE as chineseHerbalMedicineFee,
+        BLOOD_FEE as bloodFee,ALBUMIN_PRODUCTS_FEE as albuminProductsFee,GLOBULIN_PRODUCTS_FEE as globulinProductsFee,
+        COAGULATION_FACTOR_PRODUCTS_FEE as coagulationFactorProductsFee,CYTOKINE_PRODUCT_FEE as cytokineProductsFee,EFDMMF_INSPECTION as EFDMMFInspection,
+        EFDMMF_TREATMENT as EFDMMFTreatment,EFDMMF_SURGERY as EFDMMFSurgery,OTHER_COST as otherCost
+        from medical_record
+        where MEDICAL_RECORD = #{medicalRecord}
+    </select>
+
+    <update id="updateDiseaseInfo" parameterType="java.util.List">
+        <foreach collection="list" index="index" item="item" separator=";" open="" close="">
+            update medical_record
+            set DEL_FLAG = '1',
+            UPDATE_TIME = #{item.updateTime,jdbcType=TIMESTAMP},
+            UPDATE_USER_ID = #{item.updateUserId,jdbcType=VARCHAR}
+            where TABLEROWGUID = #{item.id,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+
+    <select id="getMCDData" resultType="com.drgs.vo.MDCVo">
+        select MDC as MDC,MDC_NAME as MDCName,ADRG as ADRG,
+        ADRG_NAME as ADRGName,MAIN_DIAGNOSIS_ID as MainDiagnosisId,
+        MAIN_DIAGNOSIS_NAME as MainDiagnosisName,MALE_NUM as maleNum,
+        FEMALE_NUM as femaleNum, TEN_NUM as tenNum, TWENTY_NUM as twentyNum,
+        THIRTY_NUM as thirtyNum,FORTY_NUM as fortyNum, FIFTY_NUM as fiftyNum,
+        SIXTY_NUM as sixtyNum, SEVENTY_NUM as seventyNum, EIGHTY_NUM as eightNum,
+        OTHER_NUM as otherNum
+        from mdc_info
+        where 1=1
+        <if test="MainDiagnosisId != null and MainDiagnosisId != ''">
+            and MAIN_DIAGNOSIS_ID = #{MainDiagnosisId}
+        </if>
+        <if test="MDC != null and MDC != ''">
+            and MDC = #{MDC}
+        </if>
+        <if test="ADRG != null and ADRG != ''">
+            and ADRG = #{ADRG}
+        </if>
+    </select>
+
+    <update id="updateMDCNum" parameterType="com.drgs.vo.MDCVo">
+        update mdc_info
+        set MALE_NUM = #{maleNum},
+        FEMALE_NUM = #{femaleNum},
+        TEN_NUM = #{tenNum},
+        TWENTY_NUM = #{twentyNum},
+        THIRTY_NUM = #{thirtyNum},
+        FORTY_NUM = #{fortyNum},
+        FIFTY_NUM = #{fiftyNum},
+        SIXTY_NUM = #{sixtyNum},
+        SEVENTY_NUM = #{seventyNum},
+        EIGHTY_NUM = #{eightNum},
+        OTHER_NUM = #{otherNum}
+        where MAIN_DIAGNOSIS_ID = #{MainDiagnosisId}
+    </update>
+
+    <update id="resetMDCNum" parameterType="com.drgs.vo.MDCVo">
+        update mdc_info
+        set MALE_NUM = 0,
+        FEMALE_NUM = 0,
+        TEN_NUM = 0,
+        TWENTY_NUM = 0,
+        THIRTY_NUM = 0,
+        FORTY_NUM = 0,
+        FIFTY_NUM = 0,
+        SIXTY_NUM = 0,
+        SEVENTY_NUM = 0,
+        EIGHTY_NUM = 0,
+        OTHER_NUM = 0
+    </update>
+</mapper>

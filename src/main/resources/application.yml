@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: dev
+
+thymeleaf:
+  mode: HTML5
+
+img:
+  local:
+    path: I:\\upload
+
+order:
+  close:
+    timeout: 1
