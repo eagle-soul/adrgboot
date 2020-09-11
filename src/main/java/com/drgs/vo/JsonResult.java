@@ -12,7 +12,7 @@ public class JsonResult<T> {
 	public static final int SUCCESS = 1;
 	public static final int FAIL = 0;
 
-	private int result;
+	private int code;
 //	private int resCode;
 	private String msg;
 	private T info;
@@ -21,44 +21,44 @@ public class JsonResult<T> {
 	public JsonResult() {
 	}
 
-	public JsonResult(int result, String msg) {
-		this.result = result;
+	public JsonResult(int code, String msg) {
+		this.code = code;
 		this.msg = msg;
 	}
 
-	public JsonResult(int result, int resCode, String msg, T info) {
-		this.result = result;
+	public JsonResult(int code, int resCode, String msg, T info) {
+		this.code = code;
 		this.msg = msg;
 		this.info = info;
 //		this.resCode = resCode;
 	}
 
-	public JsonResult(int result, String msg, T info, long total) {
-		this.result = result;
+	public JsonResult(int code, String msg, T info, long total) {
+		this.code = code;
 		this.msg = msg;
 		this.info = info;
 		//this.total = total;
 	}
 
-	public JsonResult(int result, String msg, T info) {
-		this.result = result;
+	public JsonResult(int code, String msg, T info) {
+		this.code = code;
 		this.msg = msg;
 		this.info = info;
 	}
 
-	public JsonResult(int result, T info) {
-		this.result = result;
+	public JsonResult(int code, T info) {
+		this.code = code;
 		this.info = info;
 	}
 
 	public static JsonResult success(String msg) {
-		final JsonResult result = new JsonResult(SUCCESS, msg);
-		return result;
+		final JsonResult code = new JsonResult(SUCCESS, msg);
+		return code;
 	}
 
 	public static JsonResult fail(String msg) {
-		final JsonResult result = new JsonResult(FAIL, msg);
-		return result;
+		final JsonResult code = new JsonResult(FAIL, msg);
+		return code;
 	}
 
 	public JsonResult put(T t) {
@@ -67,11 +67,11 @@ public class JsonResult<T> {
 	}
 
 	public int getResult() {
-		return result;
+		return code;
 	}
 
-	public void setResult(int result) {
-		this.result = result;
+	public void setResult(int code) {
+		this.code = code;
 	}
 
 	public String getMsg() {
